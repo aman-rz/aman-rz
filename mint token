@@ -1,0 +1,63 @@
+npm install --save-dev hardhat
+npx hardhat
+npm install --save-dev @nomiclabs/hardhat-ethers ethers
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract MyToken is ERC20, Ownable {
+    constructor() ERC20("MyToken", "MTK") {}
+
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
+
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
+    }
+}
+async function main() {
+    const [deployer] = await ethers.getSigners();
+
+    console.log("Deploying contracts with the account:", deployer.address);
+
+    const MyToken = await ethers.getContractFactory("MyToken");
+    const myToken = await MyToken.deploy();
+
+    console.log("Token address:", myToken.address);
+}
+
+main()
+   .then(() => process.exit(0))
+   .catch((error) => {
+       console.error(error);
+       process.exit(1);
+   });
+require("@nomiclabs/hardhat-ethers");
+
+module.exports = {
+  solidity: "0.8.0",
+  networks: {
+    hardhat: {
+      chainId: 1337
+    },
+    // Add other networks if needed
+  },
+};
+npx hardhat node
+npx hardhat run scripts/deploy.js --network localhost
+npx hardhat console --network localhost
+const [owner, addr1, addr2] = await ethers.getSigners();
+const MyToken = await ethers.getContractFactory("MyToken");
+const myToken = await MyToken.attach("deployed_contract_address");
+
+// Mint tokens (only owner can do this)
+await myToken.mint(addr1.address, 1000);
+
+// Transfer tokens
+await myToken.connect(addr1).transfer(addr2.address, 500);
+
+// Burn tokens
+await myToken.connect(addr2).burn(200);
