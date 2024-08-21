@@ -1,0 +1,41 @@
+// Array to hold the NFTs
+let nftCollection = [];
+
+// Function to mint an NFT
+function mintNFT(name, eyeColor, shirtType, bling) {
+    const nft = {
+        name: name,
+        eyeColor: eyeColor,
+        shirtType: shirtType,
+        bling: bling
+    };
+    nftCollection.push(nft);
+}
+
+// Function to list all NFTs
+function listNFTs() {
+    nftCollection.forEach((nft, index) => {
+        console.log(NFT ${index + 1});
+        console.log(Name: ${nft.name});
+        console.log(Eye Color: ${nft.eyeColor});
+        console.log(Shirt Type: ${nft.shirtType});
+        console.log(Bling: ${nft.bling});
+        console.log('-------------------');
+    });
+}
+
+// Function to get the total supply of NFTs
+function getTotalSupply() {
+    return nftCollection.length;
+}
+
+// Minting NFTs
+mintNFT("Degen King", "Blue", "T-shirt", "Gold Chain");
+mintNFT("Crypto Cat", "Green", "Hoodie", "Diamond Earrings");
+mintNFT("Blockchain Brawler", "Red", "Leather Jacket", "Platinum Watch");
+
+// Listing all NFTs
+listNFTs();
+
+// Printing the total supply of NFTs
+console.log("Total Supply:", getTotalSupply());
